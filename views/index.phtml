@@ -6,6 +6,16 @@
     <li><a href="/create">Create a product</a></li>
 </ul>
 
+<?php if ( $data['count'] > 10): ?>
+    Pages:
+    <?php $page = 0 ?>
+    <?php for($i = 1; $i < $data['count']; $i = $i + 10): ?>
+        <?php $page = $page + 1 ?>
+        <a href="/skip/<?php echo $i ?>"><?php echo $page ?></a>
+    <?php endfor ?>
+<?php endif ?>
+
+
 <table>
     <th>Products</th>
     <tr>
@@ -15,7 +25,7 @@
         <td>Description</td>
         <td>Actions</td>
     </tr>
-    <?php foreach($data['products'] as $product): ?>
+    <?php foreach ($data['products'] as $product): ?>
         <tr>
             <td><a href="/details/<?php echo $product->getId() ?>"><img src="/uploads/<?php echo $product->getPicture() ?>" alt="product picture"></a></td>
             <td><a href="/details/<?php echo $product->getId() ?>"><?php echo $product->getName() ?></a></td>

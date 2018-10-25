@@ -50,6 +50,7 @@ class ProductManager {
     public function indexAction(?string $sort = null, $args = []) : string
     {
         $skip = isset($args['skip']) ? intval($args['skip']) : null;
+        $count = $this->productCollection->count();
 
         $projection = [
             'limit' => 10,
@@ -67,7 +68,8 @@ class ProductManager {
 
         $products = $this->productFactory->createFromCursor($cursor);
         return $this->simpleView->render(VIEWS_DIR . '/index.phtml', [
-            'products' => $products
+            'products' => $products,
+            'count' => $count
         ]);
     }
 
