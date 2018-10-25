@@ -3,7 +3,7 @@ namespace ProductManager;
 
 class Product {
     /**
-     * @var int
+     * @var string
      */
     private $id;
 
@@ -27,11 +27,11 @@ class Product {
      */
     private $description;
 
-    public function getId() : ?int {
+    public function getId() : string {
         return $this->id;
     }
 
-    public function getPicture() : ?string {
+    public function getPicture() : string {
         return $this->picture;
     }
 
@@ -51,7 +51,7 @@ class Product {
         $this->picture = $picture;
     }
 
-    public function setId(int $id) : void {
+    public function setId(string $id) : void {
         $this->id = $id;
     }
 
@@ -73,6 +73,7 @@ class Product {
      */
     public function serializeToObject() {
         $product = new \stdClass();
+        $product->id = $this->id;
         $product->picture = $this->picture;
         $product->name = $this->name;
         $product->price = $this->price;

@@ -86,6 +86,8 @@ class ProductManager {
         $description = $request->getParam('description');
 
         $product = new Product();
+        $product->setId(uniqid());
+        $product->setPicture(''); // todo: Implement
         $product->setName($name);
         $product->setPrice($price);
         $product->setDescription($description);

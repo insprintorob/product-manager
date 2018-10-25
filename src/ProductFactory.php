@@ -20,6 +20,7 @@ class ProductFactory {
 
         foreach ($cursor as $document) {
             $product = new Product();
+            $product->setId($document['id']);
             $product->setPicture($document['picture']);
             $product->setName($document['name']);
             $product->setPrice($document['price']);
