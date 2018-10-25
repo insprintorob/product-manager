@@ -3,16 +3,28 @@ namespace ProductManager\Controller;
 
 
 use ProductManager\SimpleView;
+use ProductManager\Product;
+use Slim\Http\Request;
+use MongoDB\Client;
+use MongoDB\Collection;
+use Slim\Http\Response;
 
 class ProductManager {
+    /**
+     * @var Collection
+     */
+    private $productCollection;
+
     /**
      * @var SimpleView
      */
     private $simpleView;
 
     public function __construct(
+        Collection $productCollection,
         SimpleView $simpleView
     ) {
+        $this->productCollection = $productCollection;
         $this->simpleView = $simpleView;
     }
 
@@ -49,10 +61,21 @@ class ProductManager {
     }
 
     /**
-     * Upsert (insert or update) a Product
+     * Process the creation of a product
      */
-    public function upsertAction() : string
+    public function postCreateAction(Request $request, Response $response) : Response
     {
-        header('Location : /');
+        $name = $request->getParam('name');
+        $price = $request->getParam('price');
+        $description = $request->getParam('description');
+
+        $product = new Product();
+        $product->setName($name);
+        $product->setPrice($price);
+        $product->setDescription($description);
+
+        $this->productCollection->insertOne($product->serializeToObject());
+
+        return $response->withStatus(302)->withHeader('Location', '/');
     }
 }

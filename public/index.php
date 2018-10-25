@@ -9,6 +9,8 @@ use Slim\App;
 use ProductManager\Controller\ProductManager;
 use ProductManager\SimpleView;
 use Slim\Container;
+use Slim\Http\Request;
+use MongoDB\Client;
 
 // Set up the DI container using Factory Functions
 $container = new Container();
@@ -17,9 +19,26 @@ $container['simple-view'] = function() {
     return new SimpleView();
 };
 
+$container['mongodb-client'] = function() {
+    $client = new Client('mongodb://127.0.0.1:27017');
+    return $client;
+};
+
+// Expose product collection as a dependency
+$container['product-collection'] = function() use ($container) {
+    $client = $container['mongodb-client'];
+    $productCollection = $client->productManager->products;
+    return $productCollection;
+};
+
 $container['product-manager-controller'] = function() use ($container) {
+    $productCollection = $container->get('product-collection');
     $simpleView = $container->get('simple-view');
-    return new ProductManager($simpleView);
+
+    return new ProductManager(
+        $productCollection,
+        $simpleView
+    );
 };
 
 // Initialize the Slim App
@@ -29,6 +48,16 @@ $app = new App($container);
 $app->get('/', function($request, $response, $args) use ($container) {
     $productManagerController = $container->get('product-manager-controller');
     $response->write($productManagerController->indexAction());
+});
+
+$app->get('/create', function($request, $response, $args) use ($container) {
+    $productManagerController = $container->get('product-manager-controller');
+    $response->write($productManagerController->createAction());
+});
+
+$app->post('/create', function($request, $response, $args) use ($container) {
+    $productManagerController = $container->get('product-manager-controller');
+    return $productManagerController->postCreateAction($request, $response);
 });
 
 $app->run();
