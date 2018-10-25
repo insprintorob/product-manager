@@ -79,6 +79,11 @@ $app->get('/price', function($request, $response, $args) use ($container) {
     $response->write($productManagerController->indexAction('price'));
 });
 
+$app->get('/skip/{skip}', function($request, $response, $args) use ($container) {
+    $productManagerController = $container->get('product-manager-controller');
+    $response->write($productManagerController->indexAction(null, $args));
+});
+
 $app->get('/create', function($request, $response, $args) use ($container) {
     $productManagerController = $container->get('product-manager-controller');
     $response->write($productManagerController->createAction());

@@ -47,14 +47,20 @@ class ProductManager {
     /**
      * Product listing page
      */
-    public function indexAction(?string $sort = null) : string
+    public function indexAction(?string $sort = null, $args = []) : string
     {
-        $projection = [];
+        $skip = isset($args['skip']) ? intval($args['skip']) : null;
+
+        $projection = [
+            'limit' => 10,
+        ];
+
+        if ($skip !== null) {
+            $projection['skip'] = $skip;
+        }
 
         if ($sort !== null) {
-            $projection = [
-                'sort' => [ $sort => 1 ]
-            ];
+            $projection['sort'] = [ $sort => 1 ];
         }
 
         $cursor = $this->productCollection->find([], $projection);
