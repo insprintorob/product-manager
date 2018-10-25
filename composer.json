@@ -1,0 +1,12 @@
+{
+    "name": "insprintorob/product-manager-brighte",
+    "description": "Product Manager for Brighte",
+    "type": "project",
+    "license": "GPLV3+",
+    "require": {
+        "slim/slim": "^3.11"
+    },
+    "scripts": {
+        "start": "php -S localhost:8080 -t public public/index.php"
+    }
+}
