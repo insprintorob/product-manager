@@ -1,6 +1,6 @@
 <?php require('header.phtml') ?>
 <h3>Create Product</h3>
-<form method="post" type="multipart/form-data" action="/edit">
+<form method="post" enctype="multipart/form-data" action="/edit">
     <input type="hidden" name="id" value="<?php echo $data['product']->getId() ?>">
     <p>
         Name: <input type="text" name="name" value="<?php echo $data['product']->getName() ?>">
@@ -11,9 +11,13 @@
     <p>
         Description: <input type="text" name="description" value="<?php echo $data['product']->getDescription() ?>">
     </p>
-    <!--
-        todo: Add picture upload as a new feature after basic CRUD is working
-    -->
+    <p>
+        <h5>Current Picture</h5>
+        <img src="/uploads/<?php echo $data['product']->getPicture() ?>">
+    </p>
+    <p>
+        Upload a new picture: <input type="file" name="picture">
+    </p>
     <input type="submit">
 </form>
 <?php require('footer.phtml') ?>

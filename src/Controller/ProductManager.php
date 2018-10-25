@@ -83,6 +83,10 @@ class ProductManager {
 
     public function postEditAction(Request $request, Response $response) : Response
     {
+        $files = $request->getUploadedFiles();
+        $pictureFile = $files['picture'];
+        $picture = $this->uploadHelper->moveUploadedFile(UPLOADS_DIR, $pictureFile);
+
         $id = $request->getParam('id');
         $name = $request->getParam('name');
         $price = $request->getParam('price');
@@ -90,7 +94,7 @@ class ProductManager {
 
         $product = new Product();
         $product->setId($id);
-        $product->setPicture(''); // todo: Implement
+        $product->setPicture($picture); // todo: Implement
         $product->setName($name);
         $product->setPrice($price);
         $product->setDescription($description);
