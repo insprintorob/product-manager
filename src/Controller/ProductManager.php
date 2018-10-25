@@ -21,6 +21,7 @@ class ProductManager {
      */
     public function indexAction() : string
     {
+        
         return $this->simpleView->render(VIEWS_DIR . '/index.phtml', []);
     }
 }
