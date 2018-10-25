@@ -68,4 +68,10 @@ $app->post('/create', function($request, $response, $args) use ($container) {
     return $productManagerController->postCreateAction($request, $response);
 });
 
+$app->get('/delete/{id}', function($request, $response, $args) use ($container) {
+    $productManagerController = $container->get('product-manager-controller');
+    return $productManagerController->deleteAction($response, $args);
+});
+
+
 $app->run();
