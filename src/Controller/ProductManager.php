@@ -58,9 +58,45 @@ class ProductManager {
     /**
      * Edit a product
      */
-    public function editAction() : string
+    public function editAction(Response $response, $args) : string
     {
-        return $this->simpleView->render(VIEWS_DIR . '/edit.phtml', []);
+        $id = $args['id'];
+
+        $productDocument = $this->productCollection->findOne([
+            'id' => $id
+        ]);
+
+        $product = $this->productFactory->createFromBSON($productDocument);
+
+        return $this->simpleView->render(VIEWS_DIR . '/edit.phtml', [
+            'product' => $product
+        ]);
+    }
+
+    public function postEditAction(Request $request, Response $response) : Response
+    {
+        $id = $request->getParam('id');
+        $name = $request->getParam('name');
+        $price = $request->getParam('price');
+        $description = $request->getParam('description');
+
+        $product = new Product();
+        $product->setId($id);
+        $product->setPicture(''); // todo: Implement
+        $product->setName($name);
+        $product->setPrice($price);
+        $product->setDescription($description);
+
+        $this->productCollection->updateOne(
+            [
+                'id' => $id,
+            ],
+            [
+                '$set' => $product->serializeToObject(),
+            ]
+        );
+
+        return $response->withStatus(302)->withHeader('Location', '/');
     }
 
     /**

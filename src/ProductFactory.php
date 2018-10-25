@@ -1,12 +1,22 @@
 <?php
 namespace ProductManager;
 
+use MongoDB\Model\BSONDocument;
+
+
 class ProductFactory {
     /**
      * Create a Product from a MongoDB document
      */
-    public function createFromObject(array $document) {
+    public function createFromBSON(BSONDocument $document) {
+        $product = new Product();
+        $product->setId($document['id']);
+        $product->setPicture($document['picture']);
+        $product->setName($document['name']);
+        $product->setPrice($document['price']);
+        $product->setDescription($document['description']);
 
+        return $product;
     }
 
     /**
