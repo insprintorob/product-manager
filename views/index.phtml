@@ -17,8 +17,8 @@
     </tr>
     <?php foreach($data['products'] as $product): ?>
         <tr>
-            <td><img src="/uploads/<?php echo $product->getPicture() ?>" alt="product picture"></td>
-            <td><?php echo $product->getName() ?></td>
+            <td><a href="/details/<?php echo $product->getId() ?>"><img src="/uploads/<?php echo $product->getPicture() ?>" alt="product picture"></a></td>
+            <td><a href="/details/<?php echo $product->getId() ?>"><?php echo $product->getName() ?></a></td>
             <td><?php echo $product->getPrice() ?></td>
             <td><?php echo $product->getDescription() ?></td>
             <td>

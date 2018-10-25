@@ -114,10 +114,21 @@ class ProductManager {
     /**
      * Product details page
      */
-    public function detailsAction() : string
+    public function detailsAction(Response $response, $args) : string
     {
-        return $this->simpleView->render(VIEWS_DIR . '/details.phtml', []);
+        $id = $args['id'];
+
+        $productDocument = $this->productCollection->findOne([
+            'id' => $id
+        ]);
+
+        $product = $this->productFactory->createFromBSON($productDocument);
+
+        return $this->simpleView->render(VIEWS_DIR . '/details.phtml', [
+            'product' => $product
+        ]);
     }
+
 
     /**
      * Confirm deletion of a product

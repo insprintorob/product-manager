@@ -1,0 +1,22 @@
+<?php require('header.phtml') ?>
+<h3>Product Details</h3>
+    <p>
+        ID: <?php echo $data['product']->getId() ?>
+    </p>
+    <p>
+        Name: <?php echo $data['product']->getName() ?>
+    </p>
+    <p>
+        Price: <?php echo $data['product']->getPrice() ?>
+    </p>
+    <p>
+        Description: <?php echo $data['product']->getDescription() ?>
+    </p>
+    <p>
+        <h5>Picture</h5>
+        <img src="/uploads/<?php echo $data['product']->getPicture() ?>">
+    </p>
+    <p>
+        <a href="/">Back to listing page</a>
+    </p>
+<?php require('footer.phtml') ?>

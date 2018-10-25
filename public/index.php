@@ -84,6 +84,11 @@ $app->get('/edit/{id}', function($request, $response, $args) use ($container) {
     $response->write($productManagerController->editAction($response, $args));
 });
 
+$app->get('/details/{id}', function($request, $response, $args) use ($container) {
+    $productManagerController = $container->get('product-manager-controller');
+    $response->write($productManagerController->detailsAction($response, $args));
+});
+
 $app->post('/edit', function($request, $response, $args) use ($container) {
     $productManagerController = $container->get('product-manager-controller');
     return $productManagerController->postEditAction($request, $response);
