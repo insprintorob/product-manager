@@ -16,6 +16,7 @@ class ProductManagerTest extends TestCase {
         $simpleView = \Mockery::mock('ProductManager\SimpleView');
 
         $productCollection->shouldReceive('find')->once()->andReturn([]);
+        $productCollection->shouldReceive('count')->once()->andReturn(20);
         $productFactory->shouldReceive('createFromCursor')->once()->andReturn([
             new Product()
         ]);
