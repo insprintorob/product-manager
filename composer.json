@@ -5,10 +5,13 @@
     "license": "GPLV3+",
     "require": {
         "slim/slim": "^3.11",
-        "mongodb/mongodb": "^1.4"
+        "mongodb/mongodb": "^1.4",
+        "phpunit/phpunit": "^7.4",
+        "mockery/mockery": "^1.2"
     },
     "scripts": {
-        "start": "cd public; php -S localhost:8080"
+        "start": "cd public; php -S localhost:8080",
+        "test": "phpunit --bootstrap phpunit-bootstrap.php tests"
     },
     "autoload": {
         "psr-4": {"ProductManager\\": "src/"}
