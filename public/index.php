@@ -14,8 +14,8 @@ use Slim\Container;
 $container = new Container();
 
 $container['simple-view'] = function() {
+    return new SimpleView();
 };
-return new SimpleView();
 
 $container['product-manager-controller'] = function() use ($container) {
     $simpleView = $container->get('simple-view');

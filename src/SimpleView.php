@@ -4,7 +4,7 @@ namespace ProductManager;
 class SimpleView
 {
     /**
-     * SimpleViews very simple view rendering function
+     * SimpleView's very simple view rendering function
      * It takes a PHP template file path as a parameter and renders it if the file exists
      * Otherwise it will output a "Template does not exist" error.
      *
