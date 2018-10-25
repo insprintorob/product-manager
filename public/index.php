@@ -1,9 +1,10 @@
 <?php
-
-// Set up the composer autoloader
+// Define some helpful constants
 define('ROOT_DIR', realpath(__DIR__ . '/../')); // Makes including other stuff simpler, everything can be included from the same place
-require(ROOT_DIR . '/vendor/autoload.php');
 define('VIEWS_DIR', ROOT_DIR . '/views');
+
+// Set up the composer autoloader and import namespaces
+require(ROOT_DIR . '/vendor/autoload.php');
 use Slim\App;
 use ProductManager\Controller\ProductManager;
 use ProductManager\SimpleView;
@@ -13,8 +14,8 @@ use Slim\Container;
 $container = new Container();
 
 $container['simple-view'] = function() {
-    return new SimpleView();
 };
+return new SimpleView();
 
 $container['product-manager-controller'] = function() use ($container) {
     $simpleView = $container->get('simple-view');
