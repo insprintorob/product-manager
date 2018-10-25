@@ -47,9 +47,19 @@ class ProductManager {
     /**
      * Product listing page
      */
-    public function indexAction() : string
+    public function indexAction(?string $sort = null) : string
     {
-        $products = $this->productFactory->createFromCursor($this->productCollection->find([]));
+        $projection = [];
+
+        if ($sort !== null) {
+            $projection = [
+                'sort' => [ $sort => 1 ]
+            ];
+        }
+
+        $cursor = $this->productCollection->find([], $projection);
+
+        $products = $this->productFactory->createFromCursor($cursor);
         return $this->simpleView->render(VIEWS_DIR . '/index.phtml', [
             'products' => $products
         ]);

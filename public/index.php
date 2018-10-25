@@ -69,6 +69,16 @@ $app->get('/', function($request, $response, $args) use ($container) {
     $response->write($productManagerController->indexAction());
 });
 
+$app->get('/name', function($request, $response, $args) use ($container) {
+    $productManagerController = $container->get('product-manager-controller');
+    $response->write($productManagerController->indexAction('name'));
+});
+
+$app->get('/price', function($request, $response, $args) use ($container) {
+    $productManagerController = $container->get('product-manager-controller');
+    $response->write($productManagerController->indexAction('price'));
+});
+
 $app->get('/create', function($request, $response, $args) use ($container) {
     $productManagerController = $container->get('product-manager-controller');
     $response->write($productManagerController->createAction());
