@@ -5,4 +5,23 @@
 <ul>
     <li><a href="/create">Create a product</a></li>
 </ul>
+
+<table>
+    <th>Products</th>
+    <tr>
+        <td>Picture</td>
+        <td>Name</td>
+        <td>Price</td>
+        <td>Description</td>
+    </tr>
+    <?php foreach($data['products'] as $product): ?>
+        <tr>
+            <td><img src="<?php echo $product->getPicture() ?>" alt="product picture"></td>
+            <td><?php echo $product->getName() ?></td>
+            <td><?php echo $product->getPrice() ?></td>
+            <td><?php echo $product->getDescription() ?></td>
+        </tr>
+    <?php endforeach ?>
+</table>
+
 <?php require('footer.phtml') ?>

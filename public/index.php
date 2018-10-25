@@ -11,6 +11,7 @@ use ProductManager\SimpleView;
 use Slim\Container;
 use Slim\Http\Request;
 use MongoDB\Client;
+use ProductManager\ProductFactory;
 
 // Set up the DI container using Factory Functions
 $container = new Container();
@@ -24,6 +25,11 @@ $container['mongodb-client'] = function() {
     return $client;
 };
 
+$container['product-factory'] = function() {
+    $productFactory = new ProductFactory();
+    return $productFactory;
+};
+
 // Expose product collection as a dependency
 $container['product-collection'] = function() use ($container) {
     $client = $container['mongodb-client'];
@@ -33,10 +39,12 @@ $container['product-collection'] = function() use ($container) {
 
 $container['product-manager-controller'] = function() use ($container) {
     $productCollection = $container->get('product-collection');
+    $productFactory = $container->get('product-factory');
     $simpleView = $container->get('simple-view');
 
     return new ProductManager(
         $productCollection,
+        $productFactory,
         $simpleView
     );
 };

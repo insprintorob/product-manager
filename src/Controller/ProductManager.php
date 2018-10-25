@@ -8,6 +8,7 @@ use Slim\Http\Request;
 use MongoDB\Client;
 use MongoDB\Collection;
 use Slim\Http\Response;
+use ProductManager\ProductFactory;
 
 class ProductManager {
     /**
@@ -16,15 +17,22 @@ class ProductManager {
     private $productCollection;
 
     /**
+     * @var ProductFactory
+     */
+    private $productFactory;
+
+    /**
      * @var SimpleView
      */
     private $simpleView;
 
     public function __construct(
         Collection $productCollection,
+        ProductFactory $productFactory,
         SimpleView $simpleView
     ) {
         $this->productCollection = $productCollection;
+        $this->productFactory = $productFactory;
         $this->simpleView = $simpleView;
     }
 
@@ -33,7 +41,10 @@ class ProductManager {
      */
     public function indexAction() : string
     {
-        return $this->simpleView->render(VIEWS_DIR . '/index.phtml', []);
+        $products = $this->productFactory->createFromCursor($this->productCollection->find([]));
+        return $this->simpleView->render(VIEWS_DIR . '/index.phtml', [
+            'products' => $products
+        ]);
     }
 
     /**

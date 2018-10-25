@@ -22,7 +22,23 @@ class Product {
      */
     private $description;
 
-    public function setPicture(string $picture) : void {
+    public function getPicture() : ?string {
+        return $this->picture;
+    }
+
+    public function getName() : string {
+        return $this->name;
+    }
+
+    public function getPrice() : float {
+        return $this->price;
+    }
+
+    public function getDescription() : string {
+        return $this->description;
+    }
+
+    public function setPicture(?string $picture) : void {
         $this->picture = $picture;
     }
 

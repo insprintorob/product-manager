@@ -1,4 +1,6 @@
 <?php
+namespace ProductManager;
+
 class ProductFactory {
     /**
      * Create a Product from a MongoDB document
@@ -13,7 +15,19 @@ class ProductFactory {
      * @param documents
      * @return array
      */
-    public function createFromArray(array $documents) : array {
+    public function createFromCursor($cursor) : array {
+        $products = [];
 
+        foreach ($cursor as $document) {
+            $product = new Product();
+            $product->setPicture($document['picture']);
+            $product->setName($document['name']);
+            $product->setPrice($document['price']);
+            $product->setDescription($document['description']);
+
+            $products[] = $product;
+        }
+
+        return $products;
     }
 }
