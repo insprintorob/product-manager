@@ -121,4 +121,28 @@ class ProductManagerTest extends TestCase {
         $response = $productManager->postCreateAction($request, $response);
         $this->assertNotNull($response);
     }
+
+    public function testDeleteAction() {
+        $productCollection = \Mockery::mock('MongoDB\Collection');
+        $productFactory = \Mockery::mock('ProductManager\ProductFactory');
+        $uploadHelper = \Mockery::mock('ProductManager\UploadHelper');
+        $simpleView = \Mockery::mock('ProductManager\SimpleView');
+        $simpleView->shouldReceive('render')->once()->andReturn('test');
+        $response = \Mockery::mock('Slim\Http\Response');
+
+        $productCollection->shouldReceive('deleteOne')->once();
+
+        $response->shouldReceive('withStatus')->once()->with(302)->andReturn($response);
+        $response->shouldReceive('withHeader')->once()->andReturn($response);
+
+        $productManager = new ProductManager(
+            $productCollection,
+            $productFactory,
+            $uploadHelper,
+            $simpleView
+        );
+
+        $response = $productManager->deleteAction($response, [ 'id' => 1 ]);
+        $this->assertNotNull($response);
+    }
 }
