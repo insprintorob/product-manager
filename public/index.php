@@ -89,6 +89,11 @@ $app->post('/edit', function($request, $response, $args) use ($container) {
     return $productManagerController->postEditAction($request, $response);
 });
 
+$app->get('/confirm-delete/{id}', function($request, $response, $args) use ($container) {
+    $productManagerController = $container->get('product-manager-controller');
+    $response->write($productManagerController->confirmDeleteAction($args));
+});
+
 $app->get('/delete/{id}', function($request, $response, $args) use ($container) {
     $productManagerController = $container->get('product-manager-controller');
     return $productManagerController->deleteAction($response, $args);

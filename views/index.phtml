@@ -23,7 +23,7 @@
             <td><?php echo $product->getDescription() ?></td>
             <td>
                 <a href="/edit/<?php echo $product->getId() ?>">Edit</a>&nbsp;
-                <a href="/delete/<?php echo $product->getId() ?>">Delete</a>&nbsp;
+                <a href="/confirm-delete/<?php echo $product->getId() ?>">Delete</a>&nbsp;
             </td>
         </tr>
     <?php endforeach ?>

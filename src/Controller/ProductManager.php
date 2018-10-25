@@ -119,6 +119,11 @@ class ProductManager {
         return $this->simpleView->render(VIEWS_DIR . '/details.phtml', []);
     }
 
+    public function confirmDeleteAction($args) : string
+    {
+         return $this->simpleView->render(VIEWS_DIR . '/confirm-delete.phtml', [ 'id' => $args['id']]);
+    }
+
     /**
      * Delete a product
      */
