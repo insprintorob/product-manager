@@ -13,6 +13,7 @@
         <td>Name</td>
         <td>Price</td>
         <td>Description</td>
+        <td>Actions</td>
     </tr>
     <?php foreach($data['products'] as $product): ?>
         <tr>
@@ -20,6 +21,10 @@
             <td><?php echo $product->getName() ?></td>
             <td><?php echo $product->getPrice() ?></td>
             <td><?php echo $product->getDescription() ?></td>
+            <td>
+                <a href="/edit/<?php echo $product->getId() ?>">Edit</a>&nbsp;
+                <a href="/delete/<?php echo $product->getId() ?>">Delete</a>&nbsp;
+            </td>
         </tr>
     <?php endforeach ?>
 </table>

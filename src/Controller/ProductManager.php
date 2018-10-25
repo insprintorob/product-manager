@@ -71,6 +71,11 @@ class ProductManager {
         return $this->simpleView->render(VIEWS_DIR . '/details.phtml', []);
     }
 
+    public function deleteAction(Request $request, Response $response) : Response {
+        // todo: implement
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
+
     /**
      * Process the creation of a product
      */

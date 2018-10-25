@@ -3,6 +3,11 @@ namespace ProductManager;
 
 class Product {
     /**
+     * @var int
+     */
+    private $id;
+
+    /**
      * @var string
      */
     private $picture;
@@ -22,6 +27,10 @@ class Product {
      */
     private $description;
 
+    public function getId() : ?int {
+        return $this->id;
+    }
+
     public function getPicture() : ?string {
         return $this->picture;
     }
@@ -40,6 +49,10 @@ class Product {
 
     public function setPicture(?string $picture) : void {
         $this->picture = $picture;
+    }
+
+    public function setId(int $id) : void {
+        $this->id = $id;
     }
 
     public function setName(string $name) : void {
