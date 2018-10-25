@@ -1,6 +1,6 @@
 <?php require('header.phtml') ?>
 <h3>Create Product</h3>
-<form method="post" type="multipart/form-data" action="/create">
+<form method="post" enctype="multipart/form-data" action="/create">
     <p>
         Name: <input type="text" name="name">
     </p>
@@ -10,9 +10,9 @@
     <p>
         Description: <input type="text" name="description">
     </p>
-    <!--
-        todo: Add picture upload as a new feature after basic CRUD is working
-    -->
+    <p>
+        Picture: <input type="file" name="picture">
+    </p>
     <input type="submit">
 </form>
 <?php require('footer.phtml') ?>

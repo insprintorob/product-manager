@@ -9,6 +9,7 @@ use MongoDB\Client;
 use MongoDB\Collection;
 use Slim\Http\Response;
 use ProductManager\ProductFactory;
+use ProductManager\UploadHelper;
 
 class ProductManager {
     /**
@@ -22,6 +23,11 @@ class ProductManager {
     private $productFactory;
 
     /**
+     * @var UploadHelper
+     */
+    private $uploadHelper;
+
+    /**
      * @var SimpleView
      */
     private $simpleView;
@@ -29,10 +35,12 @@ class ProductManager {
     public function __construct(
         Collection $productCollection,
         ProductFactory $productFactory,
+        UploadHelper $uploadHelper,
         SimpleView $simpleView
     ) {
         $this->productCollection = $productCollection;
         $this->productFactory = $productFactory;
+        $this->uploadHelper = $uploadHelper;
         $this->simpleView = $simpleView;
     }
 
@@ -125,13 +133,16 @@ class ProductManager {
      */
     public function postCreateAction(Request $request, Response $response) : Response
     {
+        $files = $request->getUploadedFiles();
+        $pictureFile = $files['picture'];
+        $picture = $this->uploadHelper->moveUploadedFile(UPLOADS_DIR, $pictureFile);
         $name = $request->getParam('name');
         $price = $request->getParam('price');
         $description = $request->getParam('description');
 
         $product = new Product();
         $product->setId(uniqid());
-        $product->setPicture(''); // todo: Implement
+        $product->setPicture($picture); // todo: Implement
         $product->setName($name);
         $product->setPrice($price);
         $product->setDescription($description);

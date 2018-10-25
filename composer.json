@@ -8,7 +8,7 @@
         "mongodb/mongodb": "^1.4"
     },
     "scripts": {
-        "start": "php -S localhost:8080 -t public public/index.php"
+        "start": "cd public; php -S localhost:8080"
     },
     "autoload": {
         "psr-4": {"ProductManager\\": "src/"}

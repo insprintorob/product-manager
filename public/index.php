@@ -2,16 +2,21 @@
 // Define some helpful constants
 define('ROOT_DIR', realpath(__DIR__ . '/../')); // Makes including other stuff simpler, everything can be included from the same place
 define('VIEWS_DIR', ROOT_DIR . '/views');
+define('UPLOADS_DIR', ROOT_DIR . '/public/uploads');
+
 
 // Set up the composer autoloader and import namespaces
 require(ROOT_DIR . '/vendor/autoload.php');
 use Slim\App;
+use Slim\Http\UploadedFile;
+
 use ProductManager\Controller\ProductManager;
 use ProductManager\SimpleView;
 use Slim\Container;
 use Slim\Http\Request;
 use MongoDB\Client;
 use ProductManager\ProductFactory;
+use ProductManager\UploadHelper;
 
 // Set up the DI container using Factory Functions
 $container = new Container();
@@ -37,14 +42,20 @@ $container['product-collection'] = function() use ($container) {
     return $productCollection;
 };
 
+$container['upload-helper'] = function() {
+    return new UploadHelper();
+};
+
 $container['product-manager-controller'] = function() use ($container) {
     $productCollection = $container->get('product-collection');
     $productFactory = $container->get('product-factory');
+    $uploadHelper = $container->get('upload-helper');
     $simpleView = $container->get('simple-view');
 
     return new ProductManager(
         $productCollection,
         $productFactory,
+        $uploadHelper,
         $simpleView
     );
 };
