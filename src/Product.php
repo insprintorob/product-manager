@@ -31,7 +31,7 @@ class Product {
         return $this->id;
     }
 
-    public function getPicture() : string {
+    public function getPicture() : ?string {
         return $this->picture;
     }
 

@@ -119,5 +119,11 @@ $app->get('/delete/{id}', function($request, $response, $args) use ($container) 
     return $productManagerController->deleteAction($response, $args);
 });
 
+$app->get('/validation-error', function($request, $response, $args) use ($container) {
+    $productManagerController = $container->get('product-manager-controller');
+    $response->write($productManagerController->validationErrorAction());
+});
+
+
 
 $app->run();

@@ -101,18 +101,25 @@ class ProductManager {
 
     public function postEditAction(Request $request, Response $response) : Response
     {
+        $product = new Product();
         $files = $request->getUploadedFiles();
-        $pictureFile = $files['picture'];
-        $picture = $this->uploadHelper->moveUploadedFile(UPLOADS_DIR, $pictureFile);
+        $pictureFile = isset($files['picture']) ? $files['picture'] : null;
+
+        if ($pictureFile && $pictureFile->file) {
+            $picture = $this->uploadHelper->moveUploadedFile(UPLOADS_DIR, $pictureFile);
+            $product->setPicture($picture);
+        }
 
         $id = $request->getParam('id');
         $name = $request->getParam('name');
-        $price = $request->getParam('price');
+        $price = (float) $request->getParam('price');
         $description = $request->getParam('description');
 
-        $product = new Product();
+        if (!$name || !$price || !is_numeric($price) || !$description) {
+            return $response->withStatus(302)->wihHeader('Location', '/validation-error');
+        }
+
         $product->setId($id);
-        $product->setPicture($picture); // todo: Implement
         $product->setName($name);
         $product->setPrice($price);
         $product->setDescription($description);
@@ -157,6 +164,14 @@ class ProductManager {
     }
 
     /**
+     * Display a validation error
+     */
+    public function validationErrorAction() : string
+    {
+         return $this->simpleView->render(VIEWS_DIR . '/validation-error.phtml', []);
+    }
+
+    /**
      * Delete a product
      */
     public function deleteAction(Response $response, $args) : Response {
@@ -174,16 +189,24 @@ class ProductManager {
      */
     public function postCreateAction(Request $request, Response $response) : Response
     {
+        $product = new Product();
         $files = $request->getUploadedFiles();
-        $pictureFile = $files['picture'];
-        $picture = $this->uploadHelper->moveUploadedFile(UPLOADS_DIR, $pictureFile);
+        $pictureFile = isset($files['picture']) ? $files['picture'] : null;
+
+        if ($pictureFile && $pictureFile->file) {
+            $picture = $this->uploadHelper->moveUploadedFile(UPLOADS_DIR, $pictureFile);
+            $product->setPicture($picture);
+        }
+
         $name = $request->getParam('name');
-        $price = $request->getParam('price');
+        $price = (float) $request->getParam('price');
         $description = $request->getParam('description');
 
-        $product = new Product();
+        if (!$name || !$price || !is_numeric($price) || !$description) {
+            return $response->withStatus(302)->withHeader('Location', '/validation-error');
+        }
+
         $product->setId(uniqid());
-        $product->setPicture($picture); // todo: Implement
         $product->setName($name);
         $product->setPrice($price);
         $product->setDescription($description);
