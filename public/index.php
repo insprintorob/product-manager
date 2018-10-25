@@ -9,11 +9,9 @@ use ProductManager\Controller\ProductManager;
 use ProductManager\SimpleView;
 use Slim\Container;
 
+// Set up DI container using Factory Functions
 $container = new Container();
-// Set up Slim App
-$app = new App($container);
 
-// Set up the DI container using factory functions
 $container['simple-view'] = function() {
     return new SimpleView();
 };
@@ -22,6 +20,9 @@ $container['product-manager-controller'] = function() use ($container) {
     $simpleView = $container->get('simple-view');
     return new ProductManager($simpleView);
 };
+
+// Initialize Slim App
+$app = new App($container);
 
 // Define routes. Could be done in a seperate file for modularity but I've but them here to keep things simple
 $app->get('/', function($request, $response, $args) use ($container) {
