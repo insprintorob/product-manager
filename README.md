@@ -21,5 +21,13 @@ I've used Slim framework for simplicity and speed. This allowed me to structure 
 Installation
 ----
 - Check out the repo then run `composer install`.
-- Start the app using PHP's built in web server by running `composer run-script start`.
+
+Usage
+----
+- To run the app the app, start PHP's built in web server by running `composer run-script start`.
+- Then go to http://localhost:8080 in your browser. Note that you need to ensure nothing else is running on port 8080.
+
+
+Development
+----
 - To run the tests, run `composer run-script test`.
