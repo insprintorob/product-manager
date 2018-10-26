@@ -11,7 +11,7 @@ Standards
 ----
 - SOLID
 - TDD
-- MVC (custom built, not natively used by Slim as it only provides a router)
+- MVC (custom built, not natively used by Slim as it only provides a router. Controller and View layers are built from scratch)
 - PSR
 
 Framework
